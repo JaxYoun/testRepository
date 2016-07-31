@@ -1,7 +1,5 @@
 git push -u origin master //向新仓库首次提交分支
 
-
-
 D:\myTest>git clone http://10.0.0.171/cloud/cloud.git  //从远程仓库克隆整个项目到本地仓库目录
 
 git branch yjx  //新建非跟踪分支yjx（不与远程分支同步）
