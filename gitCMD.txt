@@ -1,0 +1,38 @@
+git push -u origin master //向新仓库首次提交分支
+
+
+
+D:\myTest>git clone http://10.0.0.171/cloud/cloud.git  //从远程仓库克隆整个项目到本地仓库目录
+
+git branch yjx  //新建非跟踪分支yjx（不与远程分支同步）
+
+D:\myTest\cloud>git branch [branchName] --track origin/alpha  //新建与远程alpha分支对应的本地跟踪分支alpha（会同步）
+
+D:\myTest\cloud>git checkout --track origin/alpha  //新建与远程alpha分支对应的本地跟踪分支alpha（会同步）并切换
+
+git branch	//查看当前操作的分支
+git checkout yjx	//切换到yjx分支
+git push origin newBranch //将新分支发布到远程仓库
+
+git status	//查看当前分支上的文件状态
+git add .	//将修改添加到stage
+git commit -m 'xxxxx'	//将修改提交到当前分支对应的本地分支上
+
+git checkout alpha	//切换到本地alpha分支
+git branch	
+git merge yjx	//将本地yjx分支，合并到本地alpha分支
+
+
+git status
+
+git fetch origin alpha	//拉取远端alpha分支（FETCH_HEAD）
+git merge FETCH_HEAD	//将远端alpha分支合并到本地alpha
+
+//解决冲突
+
+git add .
+git commit -m 'yyyyy'
+
+
+git status
+git push origin alpha
