@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+	
+	<context:annotation-config/>
+	<context:component-scan base-package="com.dao" /><!-- 此处只写包名 -->
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	       <property name="driverClass" value="${driverClass}" />
+	       <property name="jdbcUrl" value="${jdbcUrl}" />
+	       <property name="user" value="${user}" />
+	       <property name="password" value="${password}" />
+	       <property name="initialPoolSize" value="${initialPoolSize}" />
+	       <property name="minPoolSize" value="${minPoolSize}" />
+	       <property name="maxPoolSize" value="${maxPoolSize}" />
+	       <property name="maxIdleTime" value="${maxIdleTime}" />
+	       <property name="acquireIncrement" value="${acquireIncrement}" />
+	       <property name="idleConnectionTestPeriod" value="${idleConnectionTestPeriod}" />
+	       <property name="testConnectionOnCheckout" value="${testConnectionOnCheckout}" />
+	       <property name="testConnectionOnCheckin" value="${testConnectionOnCheckin}" />
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	     <property name="dataSource" ref="dataSource" />
+	     <property name="configLocation" value="classpath:mybatis.xml"/>
+	     <property name="mapperLocations" value="classpath:com/dao/mapper/*.xml" />
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+    
+    <bean id="macb" class="com.sckj.macb.dialet.MYSQL5Dialect">
+        <property name="auto" value="update" />
+        <property name="showsql" value="true" />    
+        <property name="dataSource" ref="dataSource" />
+        <property name="packages">
+            <list>
+                <value>com.entity.demo</value>
+            </list>
+        </property>
+    </bean>
+</beans>
